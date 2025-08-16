@@ -1,0 +1,77 @@
+<?php
+// admin/usuarios.php
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/auth.php';
+if (!isAdmin()) { header("Location: /proyecto/login.php"); exit; }
+
+// Crear usuario
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'create_user') {
+    $nombre = $_POST['nombre'] ?? '';
+    $usuario = $_POST['usuario'] ?? '';
+    $telefono = $_POST['telefono'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $pass = $_POST['password'] ?? '';
+    $priv = $_POST['priv'] ?? 'agente';
+    if ($nombre && $usuario && $pass) {
+        $hash = password_hash($pass, PASSWORD_DEFAULT);
+        $stmt = $mysqli->prepare("INSERT INTO tablaUsuarios (nombreUsuario, telefonoUsuario, correoUsuario, emailUsuario, usuarioLogin, contrasenaLogin, privilegioUsuario, usuarioNuevo) VALUES (?,?,?,?,?,?,?,0)");
+        $stmt->bind_param("sssssss", $nombre, $telefono, $email, $email, $usuario, $hash, $priv);
+        $stmt->execute();
+        $stmt->close();
+        $msg = "Usuario creado.";
+    } else {
+        $msg = "Rellena nombre, usuario y contraseña.";
+    }
+}
+
+// Eliminar
+if (isset($_GET['delete'])) {
+    $id = intval($_GET['delete']);
+    $stmt = $mysqli->prepare("DELETE FROM tablaUsuarios WHERE idUsuario = ?");
+    $stmt->bind_param("i",$id);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: usuarios.php");
+    exit;
+}
+
+// Listado
+$res = $mysqli->query("SELECT idUsuario,nombreUsuario,usuarioLogin,privilegioUsuario FROM tablaUsuarios ORDER BY idUsuario DESC");
+$usrs = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+<div class="p-6">
+  <h2 class="text-2xl font-bold mb-4">Administrar Usuarios</h2>
+  <?php if(isset($msg)): ?><div class="p-2 bg-green-100 text-green-800 mb-3"><?= h($msg) ?></div><?php endif; ?>
+
+  <form method="post" class="bg-white p-4 rounded mb-6">
+    <input type="hidden" name="action" value="create_user">
+    <input name="nombre" placeholder="Nombre" class="w-full p-2 rounded mb-2" required>
+    <input name="usuario" placeholder="Usuario login" class="w-full p-2 rounded mb-2" required>
+    <input name="telefono" placeholder="Telefono" class="w-full p-2 rounded mb-2">
+    <input name="email" placeholder="Email" class="w-full p-2 rounded mb-2">
+    <input name="password" placeholder="Contraseña" type="password" class="w-full p-2 rounded mb-2" required>
+    <select name="priv" class="w-full p-2 rounded mb-2">
+      <option value="agente">Agente</option>
+      <option value="administrador">Administrador</option>
+    </select>
+    <div class="flex justify-end"><button class="btn-primary px-4 py-2 rounded">Crear usuario</button></div>
+  </form>
+
+  <h3 class="font-bold mb-2">Usuarios actuales</h3>
+  <ul class="space-y-2">
+    <?php foreach($usrs as $u): ?>
+      <li class="p-3 bg-white rounded flex justify-between items-center">
+        <div><?= h($u['nombreUsuario']) ?> - <?= h($u['usuarioLogin']) ?> - <?= h($u['privilegioUsuario']) ?></div>
+        <div>
+          <?php if(intval($u['idUsuario']) !== intval($_SESSION['user']['idUsuario'])): ?>
+            <a href="?delete=<?= h($u['idUsuario']) ?>" onclick="return confirm('Eliminar usuario?')" class="px-2 py-1 text-xs bg-red-100 rounded">Eliminar</a>
+          <?php endif; ?>
+        </div>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+</div>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>
