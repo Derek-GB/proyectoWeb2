@@ -67,9 +67,9 @@ $config = getConfig($mysqli);
     <span>|</span>
     <a class="hover:underline" href="/proyecto/index.php#quienes">QUIENES SOMOS</a>
     <span>|</span>
-    <a class="hover:underline" href="/proyecto/list.php?tipo=alquiler">ALQUILERES</a>
+    <a class="hover:underline" href="/proyecto/index.php#alquiler">ALQUILERES</a>
     <span>|</span>
-    <a class="hover:underline" href="/proyecto/list.php?tipo=venta">VENTAS</a>
+    <a class="hover:underline" href="/proyecto/index.php#ventas">VENTAS</a>
     <span>|</span>
     <a class="hover:underline" href="/proyecto/index.php#contacto">CONTACTENOS</a>
   </nav>

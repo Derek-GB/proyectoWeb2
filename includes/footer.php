@@ -39,7 +39,7 @@
     </div>
 
     <!-- Columna 3: Formulario de contacto -->
-    <div class="bg-white/20 rounded p-4">
+    <div class="bg-white/20 rounded p-4" id="contacto">
       <h4 class="text-lg font-bold mb-3">Contactanos</h4>
       <form method="post" action="?action=contact" class="space-y-2">
         <input type="text" name="c_name" placeholder="Nombre" class="w-full p-2 rounded text-black" required>
