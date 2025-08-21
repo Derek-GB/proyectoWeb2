@@ -41,16 +41,29 @@ function getConfig($mysqli) {
 }
 
 /* ------------------ Propiedades ------------------ */
-function getProperties($mysqli, $filter = null, $limit = 3) {
-    $sql = "SELECT p.*, u.nombreUsuario
-            FROM tablaPropiedades p
-            LEFT JOIN tablaUsuarios u ON p.idAgente = u.idUsuario";
+function getProperties($mysqli, $filter = null, $limit = 3, $search = null) {
+    $sql = "SELECT p.*, u.nombreUsuario FROM tablaPropiedades p LEFT JOIN tablaUsuarios u ON p.idAgente = u.idUsuario";
+    $where = [];
     if ($filter === 'destacadas') {
-        $sql .= " WHERE p.propiedadDestacada = 1";
-    } elseif ($filter === 'venta') {
-        $sql .= " WHERE p.tipoPropiedad = 'venta'";
-    } elseif ($filter === 'alquiler') {
-        $sql .= " WHERE p.tipoPropiedad = 'alquiler'";
+        $where[] = "p.propiedadDestacada = 1";
+    } elseif ($filter === 'venta' || $filter === 'alquiler') {
+        if (!$search) {
+            $where[] = "p.tipoPropiedad = '" . $mysqli->real_escape_string($filter) . "'";
+        }
+    }
+    if ($search) {
+        $s = $mysqli->real_escape_string($search);
+        $searchFields = [
+            "p.tituloPropiedad LIKE '%$s%'",
+            "p.descripcionBrevePropiedad LIKE '%$s%'",
+            "p.precioPropiedad LIKE '%$s%'",
+            "p.ubicacionPropiedad LIKE '%$s%'",
+            "p.tipoPropiedad LIKE '%$s%'"
+        ];
+        $where[] = '(' . implode(' OR ', $searchFields) . ')';
+    }
+    if ($where) {
+        $sql .= " WHERE " . implode(' AND ', $where);
     }
     $sql .= " ORDER BY p.idPropiedad DESC LIMIT " . intval($limit);
     $res = $mysqli->query($sql);
@@ -109,19 +122,4 @@ function ensureDefaultAdmin($mysqli) {
         $stmt->execute();
         $stmt->close();
     }
-}
-
-/* ------------------ Contact form write ------------------ */
-function addContact($name, $email, $phone, $message) {
-    $file = __DIR__ . '/../data/contacts.json';
-    $arr = json_decode(file_get_contents($file), true);
-    $arr[] = [
-        'id' => time(),
-        'name' => $name,
-        'email' => $email,
-        'phone' => $phone,
-        'message' => $message,
-        'created' => date('c')
-    ];
-    file_put_contents($file, json_encode($arr, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 }

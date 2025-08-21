@@ -22,10 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             if ($ok) {
                 // establecer session (no guardar contraseña en session)
-                unset($user['contrasenaLogin']);
-                $_SESSION['user'] = $user;
-                header("Location: /proyecto/index.php");
-                exit;
+                        if (isset($user['usuarioNuevo']) && $user['usuarioNuevo'] == 1) {
+                            unset($user['contrasenaLogin']);
+                            $_SESSION['user'] = $user;
+                            header("Location: /proyecto/cambiarContra.php");
+                            exit;
+                        } else {
+                            unset($user['contrasenaLogin']);
+                            $_SESSION['user'] = $user;
+                            header("Location: /proyecto/index.php");
+                            exit;
+                        }
             }
         }
         $error = "Usuario o contraseña incorrectos.";

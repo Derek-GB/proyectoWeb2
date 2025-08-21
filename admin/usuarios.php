@@ -13,16 +13,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'creat
     $email = $_POST['email'] ?? '';
     $pass = $_POST['password'] ?? '';
     $priv = $_POST['priv'] ?? 'agente';
-    if ($nombre && $usuario && $pass) {
-        $hash = password_hash($pass, PASSWORD_DEFAULT);
-        $stmt = $mysqli->prepare("INSERT INTO tablaUsuarios (nombreUsuario, telefonoUsuario, correoUsuario, emailUsuario, usuarioLogin, contrasenaLogin, privilegioUsuario, usuarioNuevo) VALUES (?,?,?,?,?,?,?,0)");
-        $stmt->bind_param("sssssss", $nombre, $telefono, $email, $email, $usuario, $hash, $priv);
-        $stmt->execute();
-        $stmt->close();
-        $msg = "Usuario creado.";
-    } else {
-        $msg = "Rellena nombre, usuario y contraseña.";
-    }
+  if ($nombre && $usuario && $pass) {
+    $hash = password_hash($pass, PASSWORD_DEFAULT);
+    $usuarioNuevo = 1;
+    $stmt = $mysqli->prepare("INSERT INTO tablaUsuarios (nombreUsuario, telefonoUsuario, correoUsuario, emailUsuario, usuarioLogin, contrasenaLogin, privilegioUsuario, usuarioNuevo) VALUES (?,?,?,?,?,?,?,?)");
+    $stmt->bind_param("sssssssi", $nombre, $telefono, $email, $email, $usuario, $hash, $priv, $usuarioNuevo);
+    $stmt->execute();
+    $stmt->close();
+    $msg = "Usuario creado.";
+  } else {
+    $msg = "Rellena nombre, usuario y contraseña.";
+  }
 }
 
 // Eliminar

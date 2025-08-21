@@ -5,10 +5,8 @@ require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/auth.php';
 
 $allowed = ['destacadas','venta','alquiler'];
-$filter = strtolower(trim($_GET['filter'] ?? 'venta'));
-if (!in_array($filter, $allowed)) {
-    $filter = 'venta';
-}
+
+$filter = null;
 
 // Obtener título para la página
 $titles = [
@@ -17,11 +15,12 @@ $titles = [
   'alquiler' => 'PROPIEDADES EN ALQUILER'
 ];
 
-$title = $titles[$filter] ?? 'PROPIEDADES';
+$title = $filter && isset($titles[$filter]) ? $titles[$filter] : 'PROPIEDADES';
 
 // Traer todas las propiedades del tipo solicitado
 // Usamos un límite alto (1000). Si prefieres paginación, lo agregamos luego.
-$items = getProperties($mysqli, $filter, 1000);
+$search = isset($_GET['q']) ? trim($_GET['q']) : null;
+$items = getProperties($mysqli, $filter, 1000, $search);
 
 require_once __DIR__ . '/includes/header.php';
 ?>

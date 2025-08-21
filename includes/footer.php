@@ -1,6 +1,3 @@
-<?php
-// includes/footer.php
-?>
 <footer id="footer" class="py-10" style="background:var(--accent); color:var(--text);">
   <div class="container mx-auto px-6 grid md:grid-cols-3 gap-8 items-center">
     
@@ -22,18 +19,18 @@
 
     <!-- Columna 2: Logo y redes -->
     <div class="text-center space-y-4">
-      <img src="<?= h($config['iconoBlanco'] ?? $config['iconoPrincipal']) ?>" 
+      <img src="<?= "/proyecto/" . h($config['iconoBlanco'] ?? $config['iconoPrincipal']) ?>" 
            alt="logo" class="mx-auto h-12">
       <h4 class="font-bold uppercase">UTN Solutions<br>Real State</h4>
       <div class="flex justify-center gap-4 mt-3">
         <a href="<?= h($config['facebook']) ?>" target="_blank" class="hover:opacity-80">
-          <img src="assets/icons/facebook.png" alt="Facebook" class="h-8">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="h-8">
         </a>
         <a href="<?= h($config['youtube']) ?>" target="_blank" class="hover:opacity-80">
-          <img src="assets/icons/youtube.png" alt="YouTube" class="h-8">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube" class="h-8">
         </a>
         <a href="<?= h($config['instagram']) ?>" target="_blank" class="hover:opacity-80">
-          <img src="assets/icons/instagram.png" alt="Instagram" class="h-8">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="h-8">
         </a>
       </div>
     </div>
@@ -41,11 +38,11 @@
     <!-- Columna 3: Formulario de contacto -->
     <div class="bg-white/20 rounded p-4" id="contacto">
       <h4 class="text-lg font-bold mb-3">Contactanos</h4>
-      <form method="post" action="?action=contact" class="space-y-2">
-        <input type="text" name="c_name" placeholder="Nombre" class="w-full p-2 rounded text-black" required>
-        <input type="email" name="c_email" placeholder="Email" class="w-full p-2 rounded text-black" required>
-        <input type="text" name="c_phone" placeholder="Teléfono" class="w-full p-2 rounded text-black">
-        <textarea name="c_message" placeholder="Mensaje" class="w-full p-2 rounded text-black" required></textarea>
+      <form method="post" action="/proyecto/correo.php" class="space-y-2">
+        <input type="text" name="nombre" placeholder="Nombre" class="w-full p-2 rounded text-black" required>
+        <input type="email" name="email" placeholder="Email" class="w-full p-2 rounded text-black" required>
+        <input type="text" name="telefono" placeholder="Teléfono" class="w-full p-2 rounded text-black">
+        <textarea name="mensaje" placeholder="Mensaje" class="w-full p-2 rounded text-black" required></textarea>
         <button type="submit" class="w-full py-2 rounded bg-black text-white font-semibold">Enviar</button>
       </form>
     </div>
