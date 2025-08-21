@@ -12,7 +12,7 @@ $alquiler = getProperties($mysqli, 'alquiler', 3);
 $config = getConfig($mysqli);
 ?>
 <header class="relative">
-  <img src="<?= h($config['bannerImagen']) ?>" alt="banner" class="w-full h-[420px] object-cover block">
+  <img src="<?= h($config['bannerImagen']) ?>" alt="banner" class="w-full h-[420px]  block">
   <div class="absolute inset-0 flex items-center justify-center">
     <div class="bg-black/50 p-6 rounded text-center max-w-3xl">
       <h1 class="text-3xl md:text-4xl font-bold text-white"><?= h($config['bannerMensaje']) ?></h1>
