@@ -73,21 +73,21 @@ require_once __DIR__ . '/../includes/header.php';
     <input type="hidden" name="action" value="save_property">
     <input type="hidden" name="id" value="<?= h($editing['idPropiedad'] ?? 0) ?>">
     <div class="grid md:grid-cols-2 gap-2">
-      <select name="tipo" class="p-2 rounded">
+      <select name="tipo" class="p-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-300">
         <option value="venta" <?= ( ($editing['tipoPropiedad'] ?? '') === 'venta') ? 'selected':'' ?>>Venta</option>
         <option value="alquiler" <?= ( ($editing['tipoPropiedad'] ?? '') === 'alquiler') ? 'selected':'' ?>>Alquiler</option>
       </select>
-      <label class="flex items-center gap-2"><input type="checkbox" name="destacada" <?= (($editing['propiedadDestacada'] ?? 0)==1)?'checked':'' ?>> Destacada</label>
+      <label class="flex items-center gap-2"><input type="checkbox" name="destacada" class="rounded border focus:ring-2 focus:ring-blue-300" <?= (($editing['propiedadDestacada'] ?? 0)==1)?'checked':'' ?>> Destacada</label>
     </div>
-    <input name="titulo" placeholder="Titulo" class="w-full p-2 rounded mt-2" value="<?= h($editing['tituloPropiedad'] ?? '') ?>" required>
-    <textarea name="brief" placeholder="Descripción breve" class="w-full p-2 rounded mt-2"><?= h($editing['descripcionBrevePropiedad'] ?? '') ?></textarea>
-    <input name="precio" placeholder="Precio" class="w-full p-2 rounded mt-2" value="<?= h($editing['precioPropiedad'] ?? '') ?>">
-    <input name="ubicacion" placeholder="Ubicación" class="w-full p-2 rounded mt-2" value="<?= h($editing['ubicacionPropiedad'] ?? '') ?>">
+    <input name="titulo" placeholder="Titulo" class="w-full p-2 rounded border mt-2 focus:outline-none focus:ring-2 focus:ring-blue-300" value="<?= h($editing['tituloPropiedad'] ?? '') ?>" required>
+    <textarea name="brief" placeholder="Descripción breve" class="w-full p-2 rounded border mt-2 focus:outline-none focus:ring-2 focus:ring-blue-300"><?= h($editing['descripcionBrevePropiedad'] ?? '') ?></textarea>
+    <input name="precio" placeholder="Precio" class="w-full p-2 rounded border mt-2 focus:outline-none focus:ring-2 focus:ring-blue-300" value="<?= h($editing['precioPropiedad'] ?? '') ?>">
+    <input name="ubicacion" placeholder="Ubicación" class="w-full p-2 rounded border mt-2 focus:outline-none focus:ring-2 focus:ring-blue-300" value="<?= h($editing['ubicacionPropiedad'] ?? '') ?>">
     <div class="grid md:grid-cols-2 gap-2 mt-2">
-      <label class="block">Imagen destacada <input type="file" name="imagen" class="w-full p-1"></label>
+      <label class="block">Imagen destacada <input type="file" name="imagen" class="w-full p-1 rounded border focus:outline-none focus:ring-2 focus:ring-blue-300"></label>
       <label class="block">
         Mapa (imagen) 
-        <input type="file" name="mapa_image" class="w-full p-1">
+        <input type="file" name="mapa_image" class="w-full p-1 rounded border focus:outline-none focus:ring-2 focus:ring-blue-300">
         <?php if(!empty($editing['mapaPropiedad'])): ?>
           <div class="mt-2">
             <small>Mapa actual:</small><br>
@@ -96,7 +96,7 @@ require_once __DIR__ . '/../includes/header.php';
         <?php endif; ?>
       </label>
     </div>
-    <label class="block mt-2">Descripción larga <textarea name="descripcionLarga" class="w-full p-2 rounded"><?= h($editing['descripcionLargaPropiedad'] ?? '') ?></textarea></label>
+    <label class="block mt-2">Descripción larga <textarea name="descripcionLarga" class="w-full p-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-300"><?= h($editing['descripcionLargaPropiedad'] ?? '') ?></textarea></label>
     <div class="flex justify-end mt-2">
       <button class="btn-primary px-4 py-2 rounded">Guardar</button>
     </div>

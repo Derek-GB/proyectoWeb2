@@ -12,11 +12,13 @@ if (!isAdmin()) {
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="p-6">
+
   <h2 class="text-2xl font-bold mb-4">Panel Administrador</h2>
-  <div class="grid md:grid-cols-3 gap-4">
+  <div class="grid md:grid-cols-4 gap-4">
     <a href="propiedades.php" class="p-4 bg-white rounded shadow">Administrar Propiedades</a>
     <a href="usuarios.php" class="p-4 bg-white rounded shadow">Administrar Usuarios</a>
     <a href="configuracion.php" class="p-4 bg-white rounded shadow">Configuración del Sitio</a>
+    <a href="perfil.php" class="p-4 bg-white rounded shadow">Mi Perfil</a>
   </div>
 
   <div class="mt-6">

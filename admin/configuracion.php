@@ -57,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'save_
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="p-6">
+  <a href="dashboard.php" class="inline-block mb-4 px-4 py-2 rounded border border-gray-300 bg-white hover:bg-gray-100">&larr; Regresar al panel</a>
   <h2 class="text-2xl font-bold mb-4">Configuración del Sitio</h2>
   <?php if(isset($msg)): ?><div class="p-2 bg-green-100 text-green-800 mb-3"><?= h($msg) ?></div><?php endif; ?>
 

@@ -33,7 +33,7 @@ $config = getConfig($mysqli);
 <body class="antialiased min-h-screen" style="background:var(--neutral); color:#222;">
   <div class="flex flex-col w-full">
 
-    <!-- HEADER SUPERIOR: logo (izq) y usuario (der) -->
+    <!-- HEADER SUPERIOR:-->
     <header class="w-full px-8 py-3" style="background:var(--primary);">
       <div class="flex items-center justify-between w-full">
         <!-- Logo -->
@@ -50,20 +50,20 @@ $config = getConfig($mysqli);
         <div class="flex items-center gap-3">
           <?php if (isLoggedIn()): ?>
             <?php if (isAdmin()): ?>
-              <a href="/proyecto/admin/dashboard.php"
-                 class="px-3 py-1 rounded bg-[var(--accent)] text-black text-sm font-bold flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                     class="w-5 h-5">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M15.75 6a3.75 3.75 0 11-7.5 0 
-                           3.75 3.75 0 017.5 0zM4.5 19.5a7.5 
-                           7.5 0 1115 0v.75A2.25 2.25 0 
-                           0117.25 22.5h-10.5A2.25 2.25 
-                           0 014.5 20.25v-.75z" />
-                </svg>
-                Administrador
-              </a>
+          <a href="/proyecto/admin/dashboard.php"
+            class="px-3 py-1 rounded bg-[var(--accent)] text-black text-sm font-bold flex items-center gap-1">
+           <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+              class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 
+                  3.75 3.75 0 017.5 0zM4.5 19.5a7.5 
+                  7.5 0 1115 0v.75A2.25 2.25 0 
+                  0117.25 22.5h-10.5A2.25 2.25 
+                  0 014.5 20.25v-.75z" />
+           </svg>
+           Administrador
+          </a>
             <?php elseif (isset($_SESSION['user']['privilegioUsuario']) && $_SESSION['user']['privilegioUsuario'] === 'agente'): ?>
               <a href="/proyecto/agente/panel.php"
                  class="px-3 py-1 rounded bg-[var(--accent)] text-black text-sm font-bold flex items-center gap-1">
@@ -160,20 +160,27 @@ $config = getConfig($mysqli);
          style="background:var(--primary);">
       
       <!-- Redes sociales -->
-      <div class="flex items-center gap-2">
-        <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="h-7 w-7 bg-white rounded-full p-1"></a>
-        <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube" class="h-7 w-7 bg-white rounded-full p-1"></a>
-        <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="h-7 w-7 bg-white rounded-full p-1"></a>
-      </div>
+        <div class="flex items-center gap-2">
+          <a href="<?= h($config['facebook'] ?? '#') ?>" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="h-7 w-7 bg-white rounded-full p-1">
+          </a>
+          <a href="<?= h($config['youtube'] ?? '#') ?>" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube" class="h-7 w-7 bg-white rounded-full p-1">
+          </a>
+          <a href="<?= h($config['instagram'] ?? '#') ?>" target="_blank" rel="noopener">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="h-7 w-7 bg-white rounded-full p-1">
+          </a>
+        </div>
 
       <!-- Barra de búsqueda (responsive: full width en mobile, tamaño fijo desde md) -->
-      <form action="/proyecto/list.php" method="get" class="flex items-center gap-2 w-full md:w-auto md:flex-shrink-0">
+      <form action="/proyecto/list.php?filter=resultados" method="get" class="flex items-center gap-2 w-full md:w-auto md:flex-shrink-0">
         <div class="flex w-full md:w-auto">
           <input 
             type="text" name="q" placeholder="Buscar..."
             class="rounded-l px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--accent)] w-full md:w-auto"
             style="min-width:0; max-width:100%;"
           >
+          <input type="hidden" name="filter" value="resultados">
           <button type="submit" 
                   class="bg-[var(--accent)] p-2 rounded-r hover:bg-yellow-500 transition">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none"

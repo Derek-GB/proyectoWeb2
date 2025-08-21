@@ -44,17 +44,18 @@ $usrs = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="p-6">
+  <a href="dashboard.php" class="inline-block mb-4 px-4 py-2 rounded border border-gray-300 bg-white hover:bg-gray-100">&larr; Regresar al panel</a>
   <h2 class="text-2xl font-bold mb-4">Administrar Usuarios</h2>
   <?php if(isset($msg)): ?><div class="p-2 bg-green-100 text-green-800 mb-3"><?= h($msg) ?></div><?php endif; ?>
 
-  <form method="post" class="bg-white p-4 rounded mb-6">
+  <form method="post" class="bg-white p-4 rounded shadow mb-6">
     <input type="hidden" name="action" value="create_user">
-    <input name="nombre" placeholder="Nombre" class="w-full p-2 rounded mb-2" required>
-    <input name="usuario" placeholder="Usuario login" class="w-full p-2 rounded mb-2" required>
-    <input name="telefono" placeholder="Telefono" class="w-full p-2 rounded mb-2">
-    <input name="email" placeholder="Email" class="w-full p-2 rounded mb-2">
-    <input name="password" placeholder="Contraseña" type="password" class="w-full p-2 rounded mb-2" required>
-    <select name="priv" class="w-full p-2 rounded mb-2">
+    <input name="nombre" placeholder="Nombre" class="w-full p-2 rounded border border-gray-300 mb-2 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]" required>
+    <input name="usuario" placeholder="Usuario login" class="w-full p-2 rounded border border-gray-300 mb-2 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]" required>
+    <input name="telefono" placeholder="Telefono" class="w-full p-2 rounded border border-gray-300 mb-2 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]">
+    <input name="email" placeholder="Email" class="w-full p-2 rounded border border-gray-300 mb-2 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]">
+    <input name="password" placeholder="Contraseña" type="password" class="w-full p-2 rounded border border-gray-300 mb-2 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]" required>
+    <select name="priv" class="w-full p-2 rounded border border-gray-300 mb-2 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]">
       <option value="agente">Agente</option>
       <option value="administrador">Administrador</option>
     </select>
@@ -67,6 +68,7 @@ require_once __DIR__ . '/../includes/header.php';
       <li class="p-3 bg-white rounded flex justify-between items-center">
         <div><?= h($u['nombreUsuario']) ?> - <?= h($u['usuarioLogin']) ?> - <?= h($u['privilegioUsuario']) ?></div>
         <div>
+          <a href="editar_usuario.php?id=<?= h($u['idUsuario']) ?>" class="px-2 py-1 text-xs bg-yellow-100 rounded mr-2">Editar</a>
           <?php if(intval($u['idUsuario']) !== intval($_SESSION['user']['idUsuario'])): ?>
             <a href="?delete=<?= h($u['idUsuario']) ?>" onclick="return confirm('Eliminar usuario?')" class="px-2 py-1 text-xs bg-red-100 rounded">Eliminar</a>
           <?php endif; ?>

@@ -35,34 +35,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
-<div class="p-6">
-  <h2 class="text-2xl font-bold mb-4">Agregar Propiedad</h2>
-  <?php if($msg): ?><div class="p-2 bg-green-100 text-green-800 mb-3"><?= h($msg) ?></div><?php endif; ?>
-  <form method="post" enctype="multipart/form-data" class="bg-white p-4 rounded mb-6">
-    <input type="hidden" name="action" value="add_property">
-    <div class="grid md:grid-cols-2 gap-2">
-      <select name="tipo" class="p-2 rounded">
-        <option value="venta">Venta</option>
-        <option value="alquiler">Alquiler</option>
-      </select>
-      <label class="flex items-center gap-2"><input type="checkbox" name="destacada"> Destacada</label>
-    </div>
-    <input name="titulo" placeholder="Titulo" class="w-full p-2 rounded mt-2" required>
-    <textarea name="brief" placeholder="Descripción breve" class="w-full p-2 rounded mt-2"></textarea>
-    <input name="precio" placeholder="Precio" class="w-full p-2 rounded mt-2">
-    <input name="ubicacion" placeholder="Ubicación" class="w-full p-2 rounded mt-2">
-    <div class="grid md:grid-cols-2 gap-2 mt-2">
-      <label class="block">Imagen destacada <input type="file" name="imagen" class="w-full p-1"></label>
-      <label class="block">
-        Mapa (imagen) 
-        <input type="file" name="mapa_image" class="w-full p-1">
-      </label>
-    </div>
-    <label class="block mt-2">Descripción larga <textarea name="descripcionLarga" class="w-full p-2 rounded"></textarea></label>
-    <div class="flex justify-end mt-2">
-      <button class="btn-primary px-4 py-2 rounded">Agregar</button>
-    </div>
-  </form>
-  <a href="panel.php" class="inline-block px-4 py-2 rounded border">Volver al panel</a>
+<div class="p-6 flex flex-col items-center">
+  <a href="panel.php" class="inline-block mb-4 px-4 py-2 rounded border border-gray-300 bg-white hover:bg-gray-100">&larr; Volver al panel</a>
+  <div class="w-full max-w-xl">
+    <h2 class="text-2xl font-bold mb-4 text-center">Agregar Propiedad</h2>
+    <?php if($msg): ?><div class="p-2 bg-green-100 text-green-800 mb-3 text-center"><?= h($msg) ?></div><?php endif; ?>
+    <form method="post" enctype="multipart/form-data" class="bg-white p-4 rounded shadow mb-6">
+      <input type="hidden" name="action" value="add_property">
+      <div class="grid md:grid-cols-2 gap-2">
+        <select name="tipo" class="p-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-300">
+          <option value="venta">Venta</option>
+          <option value="alquiler">Alquiler</option>
+        </select>
+        <label class="flex items-center gap-2"><input type="checkbox" name="destacada" class="rounded border focus:ring-2 focus:ring-blue-300"> Destacada</label>
+      </div>
+      <input name="titulo" placeholder="Titulo" class="w-full p-2 rounded border mt-2 focus:outline-none focus:ring-2 focus:ring-blue-300" required>
+      <textarea name="brief" placeholder="Descripción breve" class="w-full p-2 rounded border mt-2 focus:outline-none focus:ring-2 focus:ring-blue-300"></textarea>
+      <input name="precio" placeholder="Precio" class="w-full p-2 rounded border mt-2 focus:outline-none focus:ring-2 focus:ring-blue-300">
+      <input name="ubicacion" placeholder="Ubicación" class="w-full p-2 rounded border mt-2 focus:outline-none focus:ring-2 focus:ring-blue-300">
+      <div class="grid md:grid-cols-2 gap-2 mt-2">
+        <label class="block">Imagen destacada <input type="file" name="imagen" class="w-full p-1 rounded border focus:outline-none focus:ring-2 focus:ring-blue-300"></label>
+        <label class="block">
+          Mapa (imagen) 
+          <input type="file" name="mapa_image" class="w-full p-1 rounded border focus:outline-none focus:ring-2 focus:ring-blue-300">
+        </label>
+      </div>
+      <label class="block mt-2">Descripción larga <textarea name="descripcionLarga" class="w-full p-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-300"></textarea></label>
+      <div class="flex justify-end mt-2">
+        <button class="btn-primary px-4 py-2 rounded">Agregar</button>
+      </div>
+    </form>
+  </div>
 </div>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

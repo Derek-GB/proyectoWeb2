@@ -4,15 +4,23 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/auth.php';
 
-$allowed = ['destacadas','venta','alquiler'];
+$allowed = ['destacadas','venta','alquiler', 'resultados'];
 
-$filter = null;
+if (isset($_GET['filter'])) {
+    $filter = strtolower(trim($_GET['filter']));
+    if (!in_array($filter, $allowed)) {
+        $filter = null;
+    }
+} else {
+    $filter = null;
+}
 
 // Obtener título para la página
 $titles = [
   'destacadas' => 'PROPIEDADES DESTACADAS',
   'venta' => 'PROPIEDADES EN VENTA',
-  'alquiler' => 'PROPIEDADES EN ALQUILER'
+  'alquiler' => 'PROPIEDADES EN ALQUILER',
+  'resultados' => 'RESULTADOS DE BÚSQUEDA'
 ];
 
 $title = $filter && isset($titles[$filter]) ? $titles[$filter] : 'PROPIEDADES';
