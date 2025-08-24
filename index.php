@@ -65,7 +65,7 @@ $config = getConfig($mysqli);
     </div>
 
     <div class="mt-6 text-center">
-      <a href="list.php?filter=destacadas" rel="noopener noreferrer"
+      <a href="list.php?filtro=destacadas" rel="noopener noreferrer"
         class="inline-block px-6 py-2 rounded border border-white/70 text-white hover:bg-white/10 transition">VER
         MAS...</a>
     </div>
@@ -98,7 +98,7 @@ $config = getConfig($mysqli);
     </div>
 
     <div class="mt-6 text-center">
-      <a href="list.php?filter=venta" rel="noopener noreferrer" class="inline-block px-6 py-2 rounded border"
+      <a href="list.php?filtro=venta" rel="noopener noreferrer" class="inline-block px-6 py-2 rounded border"
         style="border-color:var(--primary); color:var(--primary)">VER MAS...</a>
     </div>
 
@@ -132,7 +132,7 @@ $config = getConfig($mysqli);
     </div>
 
     <div class="mt-6 text-center">
-      <a href="list.php?filter=alquiler" rel="noopener noreferrer"
+      <a href="list.php?filtro=alquiler" rel="noopener noreferrer"
         class="inline-block px-6 py-2 rounded border border-white/70 text-white hover:bg-white/10 transition">VER
         MAS...</a>
     </div>

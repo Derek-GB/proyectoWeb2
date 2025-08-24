@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($usuario === '' || $password === '') {
         $error = "Rellena usuario y contraseña.";
     } else {
-        $user = getUserByLogin($mysqli, $usuario);
+        $user = getUsuarioByLogin($mysqli, $usuario);
         if ($user) {
             $stored = $user['contrasenaLogin'];
             $ok = false;

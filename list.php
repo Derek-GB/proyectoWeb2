@@ -6,13 +6,13 @@ require_once __DIR__ . '/includes/auth.php';
 
 $allowed = ['destacadas', 'venta', 'alquiler', 'resultados'];
 
-if (isset($_GET['filter'])) {
-  $filter = strtolower(trim($_GET['filter']));
-  if (!in_array($filter, $allowed)) {
-    $filter = null;
+if (isset($_GET['filtro'])) {
+  $filtro = strtolower(trim($_GET['filtro']));
+  if (!in_array($filtro, $allowed)) {
+    $filtro = null;
   }
 } else {
-  $filter = null;
+  $filtro = null;
 }
 
 // Aquí armo el título de la página según el filtro seleccionado
@@ -23,12 +23,12 @@ $titles = [
   'resultados' => 'RESULTADOS DE BÚSQUEDA'
 ];
 
-$title = $filter && isset($titles[$filter]) ? $titles[$filter] : 'PROPIEDADES';
+$title = $filtro && isset($titles[$filtro]) ? $titles[$filtro] : 'PROPIEDADES';
 
 // Traigo todas las propiedades del tipo que pidió el usuario
 // Puse un límite alto para mostrar muchas propiedades, si quieres paginación se puede agregar después
-$search = isset($_GET['q']) ? trim($_GET['q']) : null;
-$items = getPropiedades($mysqli, $filter, 1000, $search);
+$busqueda = isset($_GET['q']) ? trim($_GET['q']) : null;
+$items = getPropiedades($mysqli, $filtro, 1000, $busqueda);
 
 require_once __DIR__ . '/includes/header.php';
 ?>

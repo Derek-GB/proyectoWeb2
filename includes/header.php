@@ -130,8 +130,8 @@ $config = getConfig($mysqli);
             style="color:var(--accent); font-weight:bold; font-style:italic; letter-spacing:0.5px;">
             <a class="hover:underline" href="/proyecto/index.php">INICIO</a><span>|</span>
             <a class="hover:underline" href="/proyecto/index.php#quienes">QUIENES SOMOS</a><span>|</span>
-            <a class="hover:underline" href="/proyecto/list.php?filter=alquiler">ALQUILERES</a><span>|</span>
-            <a class="hover:underline" href="/proyecto/list.php?filter=venta">VENTAS</a><span>|</span>
+            <a class="hover:underline" href="/proyecto/list.php?filtro=alquiler">ALQUILERES</a><span>|</span>
+            <a class="hover:underline" href="/proyecto/list.php?filtro=venta">VENTAS</a><span>|</span>
             <a class="hover:underline" href="/proyecto/index.php#contacto">CONTACTENOS</a>
           </div>
 
@@ -158,8 +158,8 @@ $config = getConfig($mysqli);
           <nav class="flex flex-col px-2 py-3 gap-2">
             <a class="block px-3 py-2 hover:underline" href="/proyecto/index.php">INICIO</a>
             <a class="block px-3 py-2 hover:underline" href="/proyecto/index.php#quienes">QUIENES SOMOS</a>
-            <a class="block px-3 py-2 hover:underline" href="/proyecto/list.php?filter=alquiler">ALQUILERES</a>
-            <a class="block px-3 py-2 hover:underline" href="/proyecto/list.php?filter=venta">VENTAS</a>
+            <a class="block px-3 py-2 hover:underline" href="/proyecto/list.php?filtro=alquiler">ALQUILERES</a>
+            <a class="block px-3 py-2 hover:underline" href="/proyecto/list.php?filtro=venta">VENTAS</a>
             <a class="block px-3 py-2 hover:underline" href="/proyecto/index.php#contacto">CONTACTENOS</a>
           </nav>
         </div>
@@ -187,13 +187,13 @@ $config = getConfig($mysqli);
       </div>
 
       <!-- Barra de búsqueda para encontrar propiedades-->
-      <form action="/proyecto/list.php?filter=resultados" method="get"
+      <form action="/proyecto/list.php?filtro=resultados" method="get"
         class="flex items-center gap-2 w-full md:w-auto md:flex-shrink-0">
         <div class="flex w-full md:w-auto">
           <input type="text" name="q" placeholder="Buscar..."
             class="rounded-l px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--accent)] w-full md:w-auto"
             style="min-width:0; max-width:100%;">
-          <input type="hidden" name="filter" value="resultados">
+          <input type="hidden" name="filtro" value="resultados">
           <button type="submit" class="bg-[var(--accent)] p-2 rounded-r hover:bg-yellow-500 transition">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-5 h-5 text-black">

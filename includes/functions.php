@@ -63,36 +63,36 @@ function getConfig($mysqli)
 }
 
 /* Acá están las funciones para trabajar con las propiedades: traer, buscar, etc. */
-function getPropiedades($mysqli, $filter = null, $limit = 3, $search = null)
+function getPropiedades($mysqli, $filtro = null, $limite = 3, $busqueda = null)
 {
     // Consulta para traer propiedades y también el nombre del agente
     $sql = "SELECT p.*, u.nombreUsuario FROM tablaPropiedades p LEFT JOIN tablaUsuarios u ON p.idAgente = u.idUsuario";
-    $where = [];
+    $casos = [];
     // Filtro: destacadas, venta o alquiler
-    if ($filter === 'destacadas') {
-        $where[] = "p.propiedadDestacada = 1";
-    } elseif ($filter === 'venta' || $filter === 'alquiler') {
-        if (!$search) {
-            $where[] = "p.tipoPropiedad = '" . $mysqli->real_escape_string($filter) . "'";
+    if ($filtro === 'destacadas') {
+        $casos[] = "p.propiedadDestacada = 1";
+    } elseif ($filtro === 'venta' || $filtro === 'alquiler') {
+        if (!$busqueda) {
+            $casos[] = "p.tipoPropiedad = '" . $mysqli->real_escape_string($filtro) . "'";
         }
     }
     // Si el usuario está buscando algo, arma el filtro de búsqueda
-    if ($search) {
-        $s = $mysqli->real_escape_string($search);
-        $searchFields = [
+    if ($busqueda) {
+        $s = $mysqli->real_escape_string($busqueda);
+        $camposBusqueda = [
             "p.tituloPropiedad LIKE '%$s%'",
             "p.descripcionBrevePropiedad LIKE '%$s%'",
             "p.precioPropiedad LIKE '%$s%'",
             "p.ubicacionPropiedad LIKE '%$s%'",
             "p.tipoPropiedad LIKE '%$s%'"
         ];
-        $where[] = '(' . implode(' OR ', $searchFields) . ')';
+        $casos[] = '(' . implode(' OR ', $camposBusqueda) . ')';
     }
     // Si hay filtros, los agrega a la consulta
-    if ($where) {
-        $sql .= " WHERE " . implode(' AND ', $where);
+    if ($casos) {
+        $sql .= " WHERE " . implode(' AND ', $casos);
     }
-    $sql .= " ORDER BY p.idPropiedad DESC LIMIT " . intval($limit);
+    $sql .= " ORDER BY p.idPropiedad DESC LIMIT " . intval($limite);
     $res = $mysqli->query($sql);
     return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
 }
@@ -111,7 +111,7 @@ function getPropiedadById($mysqli, $id)
     return $res ?: null;
 }
 /* Acá están las funciones para trabajar con los usuarios: login, buscar, etc. */
-function getUserByLogin($mysqli, $login)
+function getUsuarioByLogin($mysqli, $login)
 {
     $stmt = $mysqli->prepare("SELECT * FROM tablaUsuarios WHERE LOWER(usuarioLogin) = LOWER(?) LIMIT 1");
     $stmt->bind_param("s", $login);
@@ -122,14 +122,14 @@ function getUserByLogin($mysqli, $login)
 }
 
 /* Función para subir archivos al servidor (imágenes, mapas, etc.) */
-function uploadFile($inputName)
+function uploadFile($input)
 {
     $uploadsDir = __DIR__ . '/../assets/uploads';
-    if (!isset($_FILES[$inputName]) || $_FILES[$inputName]['error'] !== UPLOAD_ERR_OK)
+    if (!isset($_FILES[$input]) || $_FILES[$input]['error'] !== UPLOAD_ERR_OK)
         return null;
-    $name = time() . "_" . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', basename($_FILES[$inputName]['name']));
+    $name = time() . "_" . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', basename($_FILES[$input]['name']));
     $target = $uploadsDir . '/' . $name;
-    if (move_uploaded_file($_FILES[$inputName]['tmp_name'], $target)) {
+    if (move_uploaded_file($_FILES[$input]['tmp_name'], $target)) {
         return 'assets/uploads/' . $name;
     }
     return null;
