@@ -2,18 +2,13 @@
 // includes/auth.php
 require_once __DIR__ . '/functions.php';
 
-function isLoggedIn() {
+function isLoggedIn()
+{
     return isset($_SESSION['user']);
 }
 
-function isAdmin() {
+function isAdmin()
+{
     return isLoggedIn() && ($_SESSION['user']['privilegioUsuario'] ?? '') === 'administrador';
 }
 
-
-function requireAdmin() {
-    if (!isAdmin()) {
-        header("Location: /proyecto/login.php");
-        exit;
-    }
-}

@@ -37,12 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once __DIR__ . '/includes/header.php';
 ?>
 <div class="container mx-auto px-6 py-12">
-  <h2 class="text-2xl font-bold mb-6">Cambiar Contraseña</h2>
-  <?php if($msg): ?><div class="bg-red-200 p-2 rounded mb-3"><?= h($msg) ?></div><?php endif; ?>
-  <form method="post" class="max-w-md">
-    <input type="password" name="newpass" placeholder="Nueva contraseña" class="w-full p-2 rounded mb-2" required>
-    <input type="password" name="repeat" placeholder="Repetir contraseña" class="w-full p-2 rounded mb-2" required>
-    <button type="submit" class="btn-primary px-4 py-2 rounded">Actualizar</button>
-  </form>
+    <h2 class="text-2xl font-bold mb-6">Cambiar Contraseña</h2>
+    <?php if ($msg): ?>
+        <div class="bg-red-200 p-2 rounded mb-3"><?= h($msg) ?></div><?php endif; ?>
+    <form method="post" class="max-w-md">
+        <input type="password" name="newpass" placeholder="Nueva contraseña" class="w-full p-2 rounded mb-2" required>
+        <input type="password" name="repeat" placeholder="Repetir contraseña" class="w-full p-2 rounded mb-2" required>
+        <button type="submit" class="btn-primary px-4 py-2 rounded">Actualizar</button>
+    </form>
 </div>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

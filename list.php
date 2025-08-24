@@ -1,21 +1,21 @@
 <?php
-// list.php - muestra todas las propiedades según filtro (destacadas / venta / alquiler)
+// Este archivo muestra todas las propiedades según el filtro que elijas (destacadas, venta, alquiler, etc)
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/auth.php';
 
-$allowed = ['destacadas','venta','alquiler', 'resultados'];
+$allowed = ['destacadas', 'venta', 'alquiler', 'resultados'];
 
 if (isset($_GET['filter'])) {
-    $filter = strtolower(trim($_GET['filter']));
-    if (!in_array($filter, $allowed)) {
-        $filter = null;
-    }
-} else {
+  $filter = strtolower(trim($_GET['filter']));
+  if (!in_array($filter, $allowed)) {
     $filter = null;
+  }
+} else {
+  $filter = null;
 }
 
-// Obtener título para la página
+// Aquí armo el título de la página según el filtro seleccionado
 $titles = [
   'destacadas' => 'PROPIEDADES DESTACADAS',
   'venta' => 'PROPIEDADES EN VENTA',
@@ -25,8 +25,8 @@ $titles = [
 
 $title = $filter && isset($titles[$filter]) ? $titles[$filter] : 'PROPIEDADES';
 
-// Traer todas las propiedades del tipo solicitado
-// Usamos un límite alto (1000). Si prefieres paginación, lo agregamos luego.
+// Traigo todas las propiedades del tipo que pidió el usuario
+// Puse un límite alto para mostrar muchas propiedades, si quieres paginación se puede agregar después
 $search = isset($_GET['q']) ? trim($_GET['q']) : null;
 $items = getProperties($mysqli, $filter, 1000, $search);
 
@@ -43,13 +43,15 @@ require_once __DIR__ . '/includes/header.php';
       <?php foreach ($items as $p): ?>
         <div class="bg-white rounded shadow overflow-hidden">
           <a href="propiedad.php?id=<?= h($p['idPropiedad']) ?>">
-            <img src="<?= h($p['imagenDestacadaPropiedad']) ?>" alt="<?= h($p['tituloPropiedad']) ?>" class="w-full h-48 object-cover">
-          
-          <div class="p-4">
-            <h3 class="font-semibold italic text-center mb-2"><?= h($p['tituloPropiedad']) ?></h3>
-            <p class="text-sm muted text-justify"><?= h($p['descripcionBrevePropiedad']) ?></p>
-            <div class="mt-3 text-center font-bold" style="color: var(--primary);">Precio: <?= '$' . number_format((float)$p['precioPropiedad'], 0, ',', '.') ?></div>
-          </div>
+            <img src="<?= h($p['imagenDestacadaPropiedad']) ?>" alt="<?= h($p['tituloPropiedad']) ?>"
+              class="w-full h-48 object-cover">
+
+            <div class="p-4">
+              <h3 class="font-semibold italic text-center mb-2"><?= h($p['tituloPropiedad']) ?></h3>
+              <p class="text-sm muted text-justify"><?= h($p['descripcionBrevePropiedad']) ?></p>
+              <div class="mt-3 text-center font-bold" style="color: var(--primary);">Precio:
+                <?= '$' . number_format((float) $p['precioPropiedad'], 0, ',', '.') ?></div>
+            </div>
           </a>
         </div>
       <?php endforeach; ?>

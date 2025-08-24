@@ -1,15 +1,21 @@
 <?php
-// includes/functions.php
+// Aquí están todas las funciones que uso en el proyecto, desde helpers hasta consultas a la base de datos
 require_once __DIR__ . '/config.php';
 
-function h($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
+// Esta función sirve para escapar caracteres especiales y evitar problemas de seguridad 
+function h($s)
+{
+    return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8');
+}
 
-/* ------------------ Configuración (leer/crear por defecto) ------------------ */
-function getConfig($mysqli) {
+/* Acá manejo la configuración general de la página: leo de la base de datos o pongo valores por defecto si no hay nada */
+function getConfig($mysqli)
+{
     $res = $mysqli->query("SELECT * FROM tablaConfiguracionPagina ORDER BY idConfiguracion DESC LIMIT 1");
-    if ($res && $res->num_rows > 0) return $res->fetch_assoc();
+    if ($res && $res->num_rows > 0)
+        return $res->fetch_assoc();
 
-    // defaults
+    // Si no hay configuración en la base de datos, uso estos valores por defecto
     $defaults = [
         'colorAzul' => '#1f2d6b',
         'colorAmarillo' => '#f0b429',
@@ -21,29 +27,48 @@ function getConfig($mysqli) {
         'bannerMensaje' => 'PERMITENOS AYUDARTE A CUMPLIR TUS SUEÑOS',
         'quienesSomos' => 'Somos una empresa dedicada a ayudarle a encontrar la propiedad ideal.',
         'quienesSomosImagen' => 'assets/uploads/default_quienes.jpg',
-        'facebook' => '#','instagram' => '#','youtube' => '#',
-        'direccion' => 'Ciudad, Calle Principal 123','telefono' => '0000-0000','email' => 'info@ejemplo.com'
+        'facebook' => '#',
+        'instagram' => '#',
+        'youtube' => '#',
+        'direccion' => 'Ciudad, Calle Principal 123',
+        'telefono' => '0000-0000',
+        'email' => 'info@ejemplo.com'
     ];
 
     $stmt = $mysqli->prepare("INSERT INTO tablaConfiguracionPagina 
         (colorAzul,colorAmarillo,colorGris,colorBlanco,iconoPrincipal,iconoBlanco,bannerImagen,bannerMensaje,quienesSomos,quienesSomosImagen,facebook,instagram,youtube,direccion,telefono,email)
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-    $stmt->bind_param("ssssssssssssssss",
-        $defaults['colorAzul'],$defaults['colorAmarillo'],$defaults['colorGris'],$defaults['colorBlanco'],
-        $defaults['iconoPrincipal'],$defaults['iconoBlanco'],$defaults['bannerImagen'],$defaults['bannerMensaje'],
-        $defaults['quienesSomos'],$defaults['quienesSomosImagen'],
-        $defaults['facebook'],$defaults['instagram'],$defaults['youtube'],
-        $defaults['direccion'],$defaults['telefono'],$defaults['email']
+    $stmt->bind_param(
+        "ssssssssssssssss",
+        $defaults['colorAzul'],
+        $defaults['colorAmarillo'],
+        $defaults['colorGris'],
+        $defaults['colorBlanco'],
+        $defaults['iconoPrincipal'],
+        $defaults['iconoBlanco'],
+        $defaults['bannerImagen'],
+        $defaults['bannerMensaje'],
+        $defaults['quienesSomos'],
+        $defaults['quienesSomosImagen'],
+        $defaults['facebook'],
+        $defaults['instagram'],
+        $defaults['youtube'],
+        $defaults['direccion'],
+        $defaults['telefono'],
+        $defaults['email']
     );
     $stmt->execute();
     $stmt->close();
     return $defaults;
 }
 
-/* ------------------ Propiedades ------------------ */
-function getProperties($mysqli, $filter = null, $limit = 3, $search = null) {
+/* Acá están las funciones para trabajar con las propiedades: traer, buscar, etc. */
+function getProperties($mysqli, $filter = null, $limit = 3, $search = null)
+{
+    // Armo la consulta para traer propiedades y también el nombre del agente
     $sql = "SELECT p.*, u.nombreUsuario FROM tablaPropiedades p LEFT JOIN tablaUsuarios u ON p.idAgente = u.idUsuario";
     $where = [];
+    // Filtro según lo que el usuario pidió: destacadas, venta o alquiler
     if ($filter === 'destacadas') {
         $where[] = "p.propiedadDestacada = 1";
     } elseif ($filter === 'venta' || $filter === 'alquiler') {
@@ -51,6 +76,7 @@ function getProperties($mysqli, $filter = null, $limit = 3, $search = null) {
             $where[] = "p.tipoPropiedad = '" . $mysqli->real_escape_string($filter) . "'";
         }
     }
+    // Si el usuario está buscando algo, armo el filtro de búsqueda
     if ($search) {
         $s = $mysqli->real_escape_string($search);
         $searchFields = [
@@ -62,6 +88,7 @@ function getProperties($mysqli, $filter = null, $limit = 3, $search = null) {
         ];
         $where[] = '(' . implode(' OR ', $searchFields) . ')';
     }
+    // Si hay filtros, los agrego a la consulta
     if ($where) {
         $sql .= " WHERE " . implode(' AND ', $where);
     }
@@ -70,7 +97,9 @@ function getProperties($mysqli, $filter = null, $limit = 3, $search = null) {
     return $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
 }
 
-function getPropertyById($mysqli, $id) {
+// Esta función trae una propiedad por su ID, junto con los datos del agente
+function getPropertyById($mysqli, $id)
+{
     $stmt = $mysqli->prepare("SELECT p.*, u.nombreUsuario, u.telefonoUsuario, u.emailUsuario
                               FROM tablaPropiedades p
                               LEFT JOIN tablaUsuarios u ON p.idAgente = u.idUsuario
@@ -81,8 +110,9 @@ function getPropertyById($mysqli, $id) {
     $stmt->close();
     return $res ?: null;
 }
-/* ------------------ Usuarios ------------------ */
-function getUserByLogin($mysqli, $login) {
+/* Acá están las funciones para trabajar con los usuarios: login, buscar, etc. */
+function getUserByLogin($mysqli, $login)
+{
     $stmt = $mysqli->prepare("SELECT * FROM tablaUsuarios WHERE LOWER(usuarioLogin) = LOWER(?) LIMIT 1");
     $stmt->bind_param("s", $login);
     $stmt->execute();
@@ -91,10 +121,12 @@ function getUserByLogin($mysqli, $login) {
     return $u ?: null;
 }
 
-/* ------------------ Upload helper ------------------ */
-function uploadFile($inputName) {
+/* Función para subir archivos al servidor (imágenes, mapas, etc.) */
+function uploadFile($inputName)
+{
     $uploadsDir = __DIR__ . '/../assets/uploads';
-    if (!isset($_FILES[$inputName]) || $_FILES[$inputName]['error'] !== UPLOAD_ERR_OK) return null;
+    if (!isset($_FILES[$inputName]) || $_FILES[$inputName]['error'] !== UPLOAD_ERR_OK)
+        return null;
     $name = time() . "_" . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', basename($_FILES[$inputName]['name']));
     $target = $uploadsDir . '/' . $name;
     if (move_uploaded_file($_FILES[$inputName]['tmp_name'], $target)) {
@@ -103,23 +135,3 @@ function uploadFile($inputName) {
     return null;
 }
 
-/* ------------------ Crear admin por defecto si no hay usuarios ------------------ */
-function ensureDefaultAdmin($mysqli) {
-    $res = $mysqli->query("SELECT COUNT(*) AS c FROM tablaUsuarios");
-    $count = 0;
-    if ($res) {
-        $count = $res->fetch_assoc()['c'] ?? 0;
-    }
-    if (intval($count) === 0) {
-        $nombre = 'Administrador';
-        $telefono = '0000-0000';
-        $correo = 'admin@local';
-        $usuario = 'Admin';
-        $pass = password_hash('123', PASSWORD_DEFAULT);
-        $priv = 'administrador';
-        $stmt = $mysqli->prepare("INSERT INTO tablaUsuarios (nombreUsuario, telefonoUsuario, correoUsuario, emailUsuario, usuarioLogin, contrasenaLogin, privilegioUsuario, usuarioNuevo) VALUES (?,?,?,?,?,?,?,0)");
-        $stmt->bind_param("sssssss", $nombre, $telefono, $correo, $correo, $usuario, $pass, $priv);
-        $stmt->execute();
-        $stmt->close();
-    }
-}

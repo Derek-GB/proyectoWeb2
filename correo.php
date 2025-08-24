@@ -8,8 +8,8 @@ require __DIR__ . '/vendor/autoload.php';
 $destinatario = "jafetconerod@gmail.com";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $nombre  = isset($_POST['nombre']) ? strip_tags($_POST['nombre']) : '';
-    $email   = isset($_POST['email']) ? strip_tags($_POST['email']) : '';
+    $nombre = isset($_POST['nombre']) ? strip_tags($_POST['nombre']) : '';
+    $email = isset($_POST['email']) ? strip_tags($_POST['email']) : '';
     $telefono = isset($_POST['telefono']) ? strip_tags($_POST['telefono']) : '';
     $mensaje = isset($_POST['mensaje']) ? strip_tags($_POST['mensaje']) : '';
 
@@ -33,21 +33,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         // Configuración SMTP
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'jafetconerod@gmail.com';   // cambia esto
-        $mail->Password   = 'ldae inwt bghs nysr';       // cambia esto (contraseña de aplicación Gmail)
-        $mail->SMTPSecure = 'tls';                   
-        $mail->Port       = 587;
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'jafetconerod@gmail.com';
+        $mail->Password = 'ldae inwt bghs nysr';
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
 
         // Configurar remitente y destinatario
-        $mail->setFrom($email, $nombre);              // el remitente será el usuario que llena el form
-        $mail->addAddress($destinatario, 'Administrador'); 
+        $mail->setFrom($email, $nombre);
+        $mail->addAddress($destinatario, 'Administrador');
 
         // Contenido
         $mail->isHTML(true);
         $mail->Subject = $asunto;
-        $mail->Body    = $cuerpoHTML;
+        $mail->Body = $cuerpoHTML;
         $mail->AltBody = $cuerpoPlano;
 
         $mail->send();
@@ -63,14 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 
-// --------------------
-// Función para mostrar mensajes bonitos
-// --------------------
-function mostrarRespuesta($titulo, $mensaje, $exito = true) {
+// Función para mostrar mensaje
+function mostrarRespuesta($titulo, $mensaje, $exito = true)
+{
     $colorBorde = $exito ? "#0a0" : "#e00";
     $colorFondo = $exito ? "#f0fff0" : "#fff0f0";
     $colorTexto = $exito ? "#080" : "#a00";
-    $colorBtn   = $exito ? "#080" : "#e00";
+    $colorBtn = $exito ? "#080" : "#e00";
 
     echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Respuesta</title>';
     echo '<meta http-equiv="refresh" content="3;url=index.php#contacto">';

@@ -44,24 +44,31 @@ $config = getConfig($mysqli);
 
     <div class="grid md:grid-cols-3 gap-6">
       <?php if (empty($featured)): ?>
-        <div class="p-6 bg-white text-black rounded col-span-3 text-center">No hay propiedades destacadas. Inicia sesión como admin para añadir.</div>
+        <div class="p-6 bg-white text-black rounded col-span-3 text-center">No hay propiedades destacadas. Inicia sesión
+          como admin para añadir.</div>
       <?php endif; ?>
 
       <?php foreach ($featured as $p): ?>
-        <a href="propiedad.php?id=<?= h($p['idPropiedad']) ?>" class="block bg-white rounded overflow-hidden shadow-lg hover:shadow-2xl transition">
-          <img src="<?= h($p['imagenDestacadaPropiedad']) ?>" alt="<?= h($p['tituloPropiedad']) ?>" class="w-full h-48 object-cover">
+        <a href="propiedad.php?id=<?= h($p['idPropiedad']) ?>"
+          class="block bg-white rounded overflow-hidden shadow-lg hover:shadow-2xl transition">
+          <img src="<?= h($p['imagenDestacadaPropiedad']) ?>" alt="<?= h($p['tituloPropiedad']) ?>"
+            class="w-full h-48 object-cover">
           <div class="p-4">
-            <h3 class="font-semibold text-center italic mb-2"><?= h($p['tituloPropiedad']) ?></h3>
+            <h3 class="font-semibold text-center italic mb-2" style="color:#222 !important; background: #fff;">
+              <?= h($p['tituloPropiedad']) ?></h3>
             <p class="text-sm muted text-justify"><?= h($p['descripcionBrevePropiedad']) ?></p>
-            <div class="mt-3 text-center font-bold accent">Precio: <?= '$' . number_format((float)$p['precioPropiedad'], 0, ',', '.') ?></div>
+            <div class="mt-3 text-center font-bold accent">Precio:
+              <?= '$' . number_format((float) $p['precioPropiedad'], 0, ',', '.') ?></div>
           </div>
         </a>
       <?php endforeach; ?>
     </div>
 
     <div class="mt-6 text-center">
-  <a href="list.php?filter=destacadas" rel="noopener noreferrer" class="inline-block px-6 py-2 rounded border border-white/70 text-white hover:bg-white/10 transition">VER MAS...</a>
-</div>
+      <a href="list.php?filter=destacadas" rel="noopener noreferrer"
+        class="inline-block px-6 py-2 rounded border border-white/70 text-white hover:bg-white/10 transition">VER
+        MAS...</a>
+    </div>
 </section>
 
 <!-- PROPIEDADES EN VENTA -->
@@ -75,20 +82,25 @@ $config = getConfig($mysqli);
       <?php endif; ?>
 
       <?php foreach ($ventas as $p): ?>
-        <a href="propiedad.php?id=<?= h($p['idPropiedad']) ?>" class="block bg-white rounded shadow hover:shadow-lg transition">
-          <img src="<?= h($p['imagenDestacadaPropiedad']) ?>" alt="<?= h($p['tituloPropiedad']) ?>" class="w-full h-40 object-cover rounded-t">
+        <a href="propiedad.php?id=<?= h($p['idPropiedad']) ?>"
+          class="block bg-white rounded shadow hover:shadow-lg transition">
+          <img src="<?= h($p['imagenDestacadaPropiedad']) ?>" alt="<?= h($p['tituloPropiedad']) ?>"
+            class="w-full h-40 object-cover rounded-t">
           <div class="p-4">
-            <h3 class="font-semibold text-center italic mb-2"><?= h($p['tituloPropiedad']) ?></h3>
+            <h3 class="font-semibold text-center italic mb-2" style="color:#222 !important; background: #fff;">
+              <?= h($p['tituloPropiedad']) ?></h3>
             <p class="text-sm muted text-justify"><?= h($p['descripcionBrevePropiedad']) ?></p>
-            <div class="mt-3 text-center font-bold" style="color: var(--primary);">Precio: <?= '$' . number_format((float)$p['precioPropiedad'], 0, ',', '.') ?></div>
+            <div class="mt-3 text-center font-bold" style="color: var(--primary);">Precio:
+              <?= '$' . number_format((float) $p['precioPropiedad'], 0, ',', '.') ?></div>
           </div>
         </a>
       <?php endforeach; ?>
     </div>
 
-  <div class="mt-6 text-center">
-  <a href="list.php?filter=venta"  rel="noopener noreferrer" class="inline-block px-6 py-2 rounded border" style="border-color:var(--primary); color:var(--primary)">VER MAS...</a>
-</div>
+    <div class="mt-6 text-center">
+      <a href="list.php?filter=venta" rel="noopener noreferrer" class="inline-block px-6 py-2 rounded border"
+        style="border-color:var(--primary); color:var(--primary)">VER MAS...</a>
+    </div>
 
   </div>
 </section>
@@ -104,20 +116,26 @@ $config = getConfig($mysqli);
       <?php endif; ?>
 
       <?php foreach ($alquiler as $p): ?>
-        <a href="propiedad.php?id=<?= h($p['idPropiedad']) ?>" class="block bg-white rounded overflow-hidden shadow-lg hover:shadow-2xl transition">
-          <img src="<?= h($p['imagenDestacadaPropiedad']) ?>" alt="<?= h($p['tituloPropiedad']) ?>" class="w-full h-48 object-cover">
+        <a href="propiedad.php?id=<?= h($p['idPropiedad']) ?>"
+          class="block bg-white rounded overflow-hidden shadow-lg hover:shadow-2xl transition">
+          <img src="<?= h($p['imagenDestacadaPropiedad']) ?>" alt="<?= h($p['tituloPropiedad']) ?>"
+            class="w-full h-48 object-cover">
           <div class="p-4">
-            <h3 class="font-semibold text-center italic mb-2"><?= h($p['tituloPropiedad']) ?></h3>
+            <h3 class="font-semibold text-center italic mb-2" style="color:#222 !important; background: #fff;">
+              <?= h($p['tituloPropiedad']) ?></h3>
             <p class="text-sm muted text-justify"><?= h($p['descripcionBrevePropiedad']) ?></p>
-            <div class="mt-3 text-center font-bold accent">Precio: <?= '$' . number_format((float)$p['precioPropiedad'], 0, ',', '.') ?></div>
+            <div class="mt-3 text-center font-bold accent">Precio:
+              <?= '$' . number_format((float) $p['precioPropiedad'], 0, ',', '.') ?></div>
           </div>
         </a>
       <?php endforeach; ?>
     </div>
 
     <div class="mt-6 text-center">
-  <a href="list.php?filter=alquiler" rel="noopener noreferrer" class="inline-block px-6 py-2 rounded border border-white/70 text-white hover:bg-white/10 transition">VER MAS...</a>
-</div>
+      <a href="list.php?filter=alquiler" rel="noopener noreferrer"
+        class="inline-block px-6 py-2 rounded border border-white/70 text-white hover:bg-white/10 transition">VER
+        MAS...</a>
+    </div>
   </div>
 </section>
 

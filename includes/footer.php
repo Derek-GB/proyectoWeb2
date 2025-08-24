@@ -1,6 +1,6 @@
 <footer id="footer" class="py-10" style="background:var(--accent); color:var(--text);">
   <div class="container mx-auto px-6 grid md:grid-cols-3 gap-8 items-center">
-    
+
     <!-- Columna 1: Info de contacto -->
     <div class="space-y-3 text-left">
       <div class="flex items-center gap-2">
@@ -19,18 +19,20 @@
 
     <!-- Columna 2: Logo y redes -->
     <div class="text-center space-y-4">
-      <img src="<?= "/proyecto/" . h($config['iconoBlanco'] ?? $config['iconoPrincipal']) ?>" 
-           alt="logo" class="mx-auto h-12">
+      <img src="<?= "/proyecto/" . h($config['iconoBlanco'] ?? $config['iconoPrincipal']) ?>" alt="logo"
+        class="mx-auto h-12">
       <h4 class="font-bold uppercase">UTN Solutions<br>Real State</h4>
       <div class="flex justify-center gap-4 mt-3">
         <a href="<?= h($config['facebook']) ?>" target="_blank" class="hover:opacity-80">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" class="h-8">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"
+            class="h-8">
         </a>
         <a href="<?= h($config['youtube']) ?>" target="_blank" class="hover:opacity-80">
           <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube" class="h-8">
         </a>
         <a href="<?= h($config['instagram']) ?>" target="_blank" class="hover:opacity-80">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" class="h-8">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"
+            class="h-8">
         </a>
       </div>
     </div>
@@ -52,5 +54,5 @@
   <div class="text-center mt-8 font-bold">&copy; <?= date('Y') ?> Derechos Reservados</div>
 </footer>
 </body>
-</html>
 
+</html>

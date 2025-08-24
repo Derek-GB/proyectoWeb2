@@ -3,7 +3,10 @@
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/auth.php';
-if (!isAdmin()) { header("Location: /proyecto/login.php"); exit; }
+if (!isAdmin()) {
+  header("Location: /proyecto/login.php");
+  exit;
+}
 
 $idAdmin = $_SESSION['user']['idUsuario'];
 $msg = null;
@@ -46,10 +49,13 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="p-6">
   <div class="w-full max-w-xl mx-auto">
     <div class="flex">
-      <a href="dashboard.php" class="inline-block mb-4 px-4 py-2 rounded border border-gray-300 bg-white hover:bg-gray-100">Volver al panel</a>
+      <a href="dashboard.php"
+        class="inline-block mb-4 px-4 py-2 rounded border border-gray-300 bg-white hover:bg-gray-100">Volver al
+        panel</a>
     </div>
     <h2 class="text-2xl font-bold mb-4 text-center">Mi Perfil (Administrador)</h2>
-    <?php if($msg): ?><div class="p-2 bg-green-100 text-green-800 mb-3 text-center"><?= h($msg) ?></div><?php endif; ?>
+    <?php if ($msg): ?>
+      <div class="p-2 bg-green-100 text-green-800 mb-3 text-center"><?= h($msg) ?></div><?php endif; ?>
     <form method="post" class="bg-white p-4 rounded shadow mb-6">
       <input type="hidden" name="action" value="update_profile">
       <label class="block mb-2">Nombre
