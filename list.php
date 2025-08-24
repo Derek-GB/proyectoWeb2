@@ -28,7 +28,7 @@ $title = $filter && isset($titles[$filter]) ? $titles[$filter] : 'PROPIEDADES';
 // Traigo todas las propiedades del tipo que pidió el usuario
 // Puse un límite alto para mostrar muchas propiedades, si quieres paginación se puede agregar después
 $search = isset($_GET['q']) ? trim($_GET['q']) : null;
-$items = getProperties($mysqli, $filter, 1000, $search);
+$items = getPropiedades($mysqli, $filter, 1000, $search);
 
 require_once __DIR__ . '/includes/header.php';
 ?>

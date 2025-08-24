@@ -18,9 +18,9 @@
     </div>
 
     <!-- Columna 2: Logo y redes -->
-    <div class="text-center space-y-4">
+    <div class="text-center space-y-2">
       <img src="<?= "/proyecto/" . h($config['iconoBlanco'] ?? $config['iconoPrincipal']) ?>" alt="logo"
-        class="mx-auto h-12">
+        class="mx-auto h-20 w-20 object-cover rounded">
       <h4 class="font-bold uppercase">UTN Solutions<br>Real State</h4>
       <div class="flex justify-center gap-4 mt-3">
         <a href="<?= h($config['facebook']) ?>" target="_blank" class="hover:opacity-80">
@@ -51,7 +51,7 @@
   </div>
 
   <!-- Derechos reservados -->
-  <div class="text-center mt-8 font-bold">&copy; <?= date('Y') ?> Derechos Reservados</div>
+  <div class="text-center mt-8 font-bold">&copy; <?= date('Y') ?> Derechos Reservados & Anthony y Derek™</div>
 </footer>
 </body>
 

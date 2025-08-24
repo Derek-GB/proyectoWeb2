@@ -10,7 +10,7 @@ if (!isAdmin()) {
 
 $config = getConfig($mysqli);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'save_settings') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'guardar_configuracion') {
 
   $icon_main = uploadFile('icon_main');
   $icon_white = uploadFile('icon_white');
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'save_
   $telefono = $_POST['telefono'] ?? $config['telefono'];
   $email = $_POST['email'] ?? $config['email'];
 
-  // Si el usuario no sube una nueva imagen, dejo la que ya estaba
+  // Si el usuario no sube una nueva imagen, deja la que ya estaba
   $icon_main = $icon_main ?: $config['iconoPrincipal'];
   $icon_white = $icon_white ?: $config['iconoBlanco'];
   $banner = $banner ?: $config['bannerImagen'];
@@ -38,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'save_
 
   // Actualizo la configuración con los nuevos datos que puso el usuario
   $row = $mysqli->query("SELECT idConfiguracion FROM tablaConfiguracionPagina ORDER BY idConfiguracion DESC LIMIT 1")->fetch_assoc();
-  $idCfg = $row['idConfiguracion'] ?? null;
-  if ($idCfg) {
+  $id = $row['idConfiguracion'] ?? null;
+  if ($id) {
     $stmt = $mysqli->prepare("UPDATE tablaConfiguracionPagina SET colorAzul=?, colorAmarillo=?, colorGris=?, colorBlanco=?, iconoPrincipal=?, iconoBlanco=?, bannerImagen=?, bannerMensaje=?, quienesSomos=?, quienesSomosImagen=?, facebook=?, instagram=?, youtube=?, direccion=?, telefono=?, email=? WHERE idConfiguracion=?");
     $stmt->bind_param(
       "ssssssssssssssssi",
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'save_
       $direccion,
       $telefono,
       $email,
-      $idCfg
+      $id
     );
     $stmt->execute();
     $stmt->close();
@@ -85,7 +85,7 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="p-2 bg-green-100 text-green-800 mb-3"><?= h($msg) ?></div><?php endif; ?>
 
   <form method="post" enctype="multipart/form-data" class="bg-white p-4 rounded">
-    <input type="hidden" name="action" value="save_settings">
+    <input type="hidden" name="action" value="guardar_configuracion">
     <div class="grid grid-cols-2 gap-2">
       <label>Color Azul<input name="colorAzul" type="color" value="<?= h($config['colorAzul']) ?>"
           class="w-full p-1"></label>
@@ -113,9 +113,24 @@ require_once __DIR__ . '/../includes/header.php';
     </div>
 
     <h5 class="font-semibold mt-2">Redes Sociales</h5>
-    <input name="facebook" placeholder="Facebook" value="<?= h($config['facebook']) ?>" class="w-full p-2 rounded">
-    <input name="youtube" placeholder="YouTube" value="<?= h($config['youtube']) ?>" class="w-full p-2 rounded">
-    <input name="instagram" placeholder="Instagram" value="<?= h($config['instagram']) ?>" class="w-full p-2 rounded">
+    <div class="flex items-center gap-2 mb-2">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"
+        class="h-7 w-7 bg-white rounded-full p-1">
+      <input name="facebook" placeholder="Enlace de Facebook" value="<?= h($config['facebook']) ?>"
+        class="w-full p-2 rounded">
+    </div>
+    <div class="flex items-center gap-2 mb-2">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube"
+        class="h-7 w-7 bg-white rounded-full p-1">
+      <input name="youtube" placeholder="Enlace de YouTube" value="<?= h($config['youtube']) ?>"
+        class="w-full p-2 rounded">
+    </div>
+    <div class="flex items-center gap-2 mb-2">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"
+        class="h-7 w-7 bg-white rounded-full p-1">
+      <input name="instagram" placeholder="Enlace de Instagram" value="<?= h($config['instagram']) ?>"
+        class="w-full p-2 rounded">
+    </div>
 
     <h5 class="font-semibold mt-2">Contacto / Dirección</h5>
     <input name="direccion" placeholder="Dirección" value="<?= h($config['direccion']) ?>" class="w-full p-2 rounded">

@@ -7,7 +7,7 @@ require_once __DIR__ . '/includes/auth.php';
 $id = intval($_GET['id'] ?? 0);
 if ($id <= 0) { die("ID inválido."); }
 
-$prop = getPropertyById($mysqli, $id);
+$prop = getPropiedadById($mysqli, $id);
 if (!$prop) { die("Propiedad no encontrada."); }
 
 require_once __DIR__ . '/includes/header.php';

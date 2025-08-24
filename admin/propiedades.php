@@ -74,7 +74,7 @@ if (isset($_GET['delete'])) {
 $editing = null;
 if (isset($_GET['edit'])) {
   $editId = intval($_GET['edit']);
-  $editing = getPropertyById($mysqli, $editId);
+  $editing = getPropiedadById($mysqli, $editId);
 }
 
 require_once __DIR__ . '/../includes/header.php';

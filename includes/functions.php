@@ -27,9 +27,9 @@ function getConfig($mysqli)
         'bannerMensaje' => 'PERMITENOS AYUDARTE A CUMPLIR TUS SUEÑOS',
         'quienesSomos' => 'Somos una empresa dedicada a ayudarle a encontrar la propiedad ideal.',
         'quienesSomosImagen' => 'assets/uploads/default_quienes.jpg',
-        'facebook' => '#',
-        'instagram' => '#',
-        'youtube' => '#',
+        'facebook' => 'https://facebook.com',
+        'instagram' => 'https://instagram.com',
+        'youtube' => 'https://youtube.com',
         'direccion' => 'Ciudad, Calle Principal 123',
         'telefono' => '0000-0000',
         'email' => 'info@ejemplo.com'
@@ -63,12 +63,12 @@ function getConfig($mysqli)
 }
 
 /* Acá están las funciones para trabajar con las propiedades: traer, buscar, etc. */
-function getProperties($mysqli, $filter = null, $limit = 3, $search = null)
+function getPropiedades($mysqli, $filter = null, $limit = 3, $search = null)
 {
-    // Armo la consulta para traer propiedades y también el nombre del agente
+    // Consulta para traer propiedades y también el nombre del agente
     $sql = "SELECT p.*, u.nombreUsuario FROM tablaPropiedades p LEFT JOIN tablaUsuarios u ON p.idAgente = u.idUsuario";
     $where = [];
-    // Filtro según lo que el usuario pidió: destacadas, venta o alquiler
+    // Filtro: destacadas, venta o alquiler
     if ($filter === 'destacadas') {
         $where[] = "p.propiedadDestacada = 1";
     } elseif ($filter === 'venta' || $filter === 'alquiler') {
@@ -76,7 +76,7 @@ function getProperties($mysqli, $filter = null, $limit = 3, $search = null)
             $where[] = "p.tipoPropiedad = '" . $mysqli->real_escape_string($filter) . "'";
         }
     }
-    // Si el usuario está buscando algo, armo el filtro de búsqueda
+    // Si el usuario está buscando algo, arma el filtro de búsqueda
     if ($search) {
         $s = $mysqli->real_escape_string($search);
         $searchFields = [
@@ -88,7 +88,7 @@ function getProperties($mysqli, $filter = null, $limit = 3, $search = null)
         ];
         $where[] = '(' . implode(' OR ', $searchFields) . ')';
     }
-    // Si hay filtros, los agrego a la consulta
+    // Si hay filtros, los agrega a la consulta
     if ($where) {
         $sql .= " WHERE " . implode(' AND ', $where);
     }
@@ -98,7 +98,7 @@ function getProperties($mysqli, $filter = null, $limit = 3, $search = null)
 }
 
 // Esta función trae una propiedad por su ID, junto con los datos del agente
-function getPropertyById($mysqli, $id)
+function getPropiedadById($mysqli, $id)
 {
     $stmt = $mysqli->prepare("SELECT p.*, u.nombreUsuario, u.telefonoUsuario, u.emailUsuario
                               FROM tablaPropiedades p

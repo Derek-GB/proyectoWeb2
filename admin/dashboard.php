@@ -24,7 +24,7 @@ require_once __DIR__ . '/../includes/header.php';
   <div class="mt-6">
     <h3 class="font-bold mb-2">Últimas propiedades</h3>
     <?php
-    $list = getProperties($mysqli, null, 10);
+    $list = getPropiedades($mysqli, null, 10);
     ?>
     <ul class="space-y-2">
       <?php foreach ($list as $row): ?>

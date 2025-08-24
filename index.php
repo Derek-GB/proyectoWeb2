@@ -4,9 +4,9 @@ require_once "includes/functions.php";
 require_once "includes/auth.php";
 require "includes/header.php";
 
-$featured = getProperties($mysqli, 'destacadas', 3);
-$ventas = getProperties($mysqli, 'venta', 3);
-$alquiler = getProperties($mysqli, 'alquiler', 3);
+$featured = getPropiedades($mysqli, 'destacadas', 3);
+$ventas = getPropiedades($mysqli, 'venta', 3);
+$alquiler = getPropiedades($mysqli, 'alquiler', 3);
 
 
 $config = getConfig($mysqli);
