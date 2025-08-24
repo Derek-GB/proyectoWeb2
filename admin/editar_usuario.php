@@ -14,7 +14,7 @@ if ($id <= 0) {
 }
 
 $msg = null;
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_user') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'actualizar_usuario') {
   $nombre = trim($_POST['nombre'] ?? '');
   $telefono = trim($_POST['telefono'] ?? '');
   $email = trim($_POST['email'] ?? '');
@@ -54,7 +54,7 @@ require_once __DIR__ . '/../includes/header.php';
     <?php if ($msg): ?>
       <div class="p-2 bg-green-100 text-green-800 mb-3 text-center"><?= h($msg) ?></div><?php endif; ?>
     <form method="post" class="bg-white p-4 rounded shadow mb-6">
-      <input type="hidden" name="action" value="update_user">
+      <input type="hidden" name="action" value="actualizar_usuario">
       <label class="block mb-2">Nombre
         <input name="nombre" class="w-full p-2 rounded border mb-2" value="<?= h($nombre) ?>" required>
       </label>

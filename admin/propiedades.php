@@ -141,10 +141,10 @@ require_once __DIR__ . '/../includes/header.php';
   <h3 class="font-bold mb-2">Listado de propiedades</h3>
   <?php
   $stmt = $mysqli->query("SELECT idPropiedad,tituloPropiedad,tipoPropiedad,precioPropiedad FROM tablaPropiedades ORDER BY idPropiedad DESC");
-  $list = $stmt ? $stmt->fetch_all(MYSQLI_ASSOC) : [];
+  $lista = $stmt ? $stmt->fetch_all(MYSQLI_ASSOC) : [];
   ?>
   <ul class="space-y-2">
-    <?php foreach ($list as $r): ?>
+    <?php foreach ($lista as $r): ?>
       <li class="p-3 bg-white rounded flex justify-between items-center">
         <div>
           <strong><?= h($r['tituloPropiedad']) ?></strong><br>
