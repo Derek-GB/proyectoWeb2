@@ -1,14 +1,13 @@
 <?php
-// Este archivo muestra todas las propiedades según el filtro que elijas (destacadas, venta, alquiler, etc)
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/auth.php';
 
-$allowed = ['destacadas', 'venta', 'alquiler', 'resultados'];
+$permitidos = ['destacadas', 'venta', 'alquiler', 'resultados'];
 
 if (isset($_GET['filtro'])) {
   $filtro = strtolower(trim($_GET['filtro']));
-  if (!in_array($filtro, $allowed)) {
+  if (!in_array($filtro, $permitidos)) {
     $filtro = null;
   }
 } else {
@@ -16,17 +15,16 @@ if (isset($_GET['filtro'])) {
 }
 
 // Aquí armo el título de la página según el filtro seleccionado
-$titles = [
+$titulos = [
   'destacadas' => 'PROPIEDADES DESTACADAS',
   'venta' => 'PROPIEDADES EN VENTA',
   'alquiler' => 'PROPIEDADES EN ALQUILER',
   'resultados' => 'RESULTADOS DE BÚSQUEDA'
 ];
 
-$title = $filtro && isset($titles[$filtro]) ? $titles[$filtro] : 'PROPIEDADES';
+$titulo = $filtro && isset($titulos[$filtro]) ? $titulos[$filtro] : 'PROPIEDADES';
 
-// Traigo todas las propiedades del tipo que pidió el usuario
-// Puse un límite alto para mostrar muchas propiedades, si quieres paginación se puede agregar después
+// si se quiere paginacion se puede agregar despues
 $busqueda = isset($_GET['q']) ? trim($_GET['q']) : null;
 $items = getPropiedades($mysqli, $filtro, 1000, $busqueda);
 
@@ -34,7 +32,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="container mx-auto px-6 py-12">
-  <h1 class="text-3xl font-bold text-center mb-6"><?= h($title) ?></h1>
+  <h1 class="text-3xl font-bold text-center mb-6"><?= h($titulo) ?></h1>
 
   <?php if (empty($items)): ?>
     <div class="p-6 bg-white rounded text-center">No se encontraron propiedades para esta sección.</div>

@@ -8,11 +8,11 @@ if (!isAdmin()) {
   exit;
 }
 
-$idAdmin = $_SESSION['user']['idUsuario'];
+$idAdmin = $_SESSION['usuario']['idUsuario'];
 $msg = null;
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_profile') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'actualizar_perfil') {
   $nombre = trim($_POST['nombre'] ?? '');
   $telefono = trim($_POST['telefono'] ?? '');
   $email = trim($_POST['email'] ?? '');
@@ -29,10 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
     $stmt->execute();
     $stmt->close();
-    $_SESSION['user']['nombreUsuario'] = $nombre;
-    $_SESSION['user']['telefonoUsuario'] = $telefono;
-    $_SESSION['user']['emailUsuario'] = $email;
-    $_SESSION['user']['usuarioLogin'] = $usuario;
+    $_SESSION['usuario']['nombreUsuario'] = $nombre;
+    $_SESSION['usuario']['telefonoUsuario'] = $telefono;
+    $_SESSION['usuario']['emailUsuario'] = $email;
+    $_SESSION['usuario']['usuarioLogin'] = $usuario;
     $msg = "Datos actualizados.";
   }
 }
@@ -57,15 +57,15 @@ require_once __DIR__ . '/../includes/header.php';
     <?php if ($msg): ?>
       <div class="p-2 bg-green-100 text-green-800 mb-3 text-center"><?= h($msg) ?></div><?php endif; ?>
     <form method="post" class="bg-white p-4 rounded shadow mb-6">
-      <input type="hidden" name="action" value="update_profile">
+      <input type="hidden" name="action" value="actualizar_perfil">
       <label class="block mb-2">Nombre
         <input name="nombre" class="w-full p-2 rounded border mb-2" value="<?= h($nombre) ?>" required>
       </label>
       <label class="block mb-2">Teléfono
-        <input name="telefono" class="w-full p-2 rounded border mb-2" value="<?= h($telefono) ?>">
+        <input type="text" name="telefono" class="w-full p-2 rounded border mb-2" value="<?= h($telefono) ?>" required>
       </label>
       <label class="block mb-2">Email
-        <input name="email" class="w-full p-2 rounded border mb-2" value="<?= h($email) ?>" required>
+        <input type="email" name="email" class="w-full p-2 rounded border mb-2" value="<?= h($email) ?>" required>
       </label>
       <label class="block mb-2">Usuario
         <input name="usuario" class="w-full p-2 rounded border mb-2" value="<?= h($usuario) ?>" required>

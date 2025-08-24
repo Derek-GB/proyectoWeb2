@@ -4,12 +4,12 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/auth.php';
 
-if (!isLoggedIn() || ($_SESSION['user']['privilegioUsuario'] ?? '') !== 'agente') {
+if (!isLoggedIn() || ($_SESSION['usuario']['privilegioUsuario'] ?? '') !== 'agente') {
   header("Location: /proyecto/login.php");
   exit;
 }
 
-$idAgente = $_SESSION['user']['idUsuario'];
+$idAgente = $_SESSION['usuario']['idUsuario'];
 $msg = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_property') {

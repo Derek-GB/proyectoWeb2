@@ -1,5 +1,4 @@
 <?php
-// login.php
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/functions.php';
 
@@ -10,23 +9,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($usuario === '' || $password === '') {
         $error = "Rellena usuario y contraseña.";
     } else {
-        $user = getUsuarioByLogin($mysqli, $usuario);
-        if ($user) {
-            $stored = $user['contrasenaLogin'];
+        $usuario = getUsuarioByLogin($mysqli, $usuario);
+        if ($usuario) {
+            $guardado = $usuario['contrasenaLogin'];
             $ok = false;
             // Solo se permite autenticación con contraseñas segura
-            if (password_verify($password, $stored))
+            if (password_verify($password, $guardado))
                 $ok = true;
             if ($ok) {
                 // establecer session 
-                if (isset($user['usuarioNuevo']) && $user['usuarioNuevo'] == 1) {
-                    unset($user['contrasenaLogin']);
-                    $_SESSION['user'] = $user;
-                    header("Location: /proyecto/cambiarContra.php");
+                if (isset($usuario['usuarioNuevo']) && $usuario['usuarioNuevo'] == 1) {
+                    unset($usuario['contrasenaLogin']);
+                    $_SESSION['usuario'] = $usuario;
+                    header("Location: /proyecto/cambiar_contrasena.php");
                     exit;
                 } else {
-                    unset($user['contrasenaLogin']);
-                    $_SESSION['user'] = $user;
+                    unset($usuario['contrasenaLogin']);
+                    $_SESSION['usuario'] = $usuario;
                     header("Location: /proyecto/index.php");
                     exit;
                 }

@@ -4,7 +4,7 @@ require_once "includes/functions.php";
 require_once "includes/auth.php";
 require "includes/header.php";
 
-$featured = getPropiedades($mysqli, 'destacadas', 3);
+$destacadas = getPropiedades($mysqli, 'destacadas', 3);
 $ventas = getPropiedades($mysqli, 'venta', 3);
 $alquiler = getPropiedades($mysqli, 'alquiler', 3);
 
@@ -43,12 +43,12 @@ $config = getConfig($mysqli);
     <h2 class="text-3xl font-bold text-center mb-6">PROPIEDADES DESTACADAS</h2>
 
     <div class="grid md:grid-cols-3 gap-6">
-      <?php if (empty($featured)): ?>
+      <?php if (empty($destacadas)): ?>
         <div class="p-6 bg-white text-black rounded col-span-3 text-center">No hay propiedades destacadas. Inicia sesión
           como admin para añadir.</div>
       <?php endif; ?>
 
-      <?php foreach ($featured as $p): ?>
+      <?php foreach ($destacadas as $p): ?>
         <a href="propiedad.php?id=<?= h($p['idPropiedad']) ?>"
           class="block bg-white rounded overflow-hidden shadow-lg hover:shadow-2xl transition">
           <img src="<?= h($p['imagenDestacadaPropiedad']) ?>" alt="<?= h($p['tituloPropiedad']) ?>"

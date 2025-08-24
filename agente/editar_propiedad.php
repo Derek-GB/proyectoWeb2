@@ -4,12 +4,12 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/auth.php';
 
-if (!isLoggedIn() || ($_SESSION['user']['privilegioUsuario'] ?? '') !== 'agente') {
+if (!isLoggedIn() || ($_SESSION['usuario']['privilegioUsuario'] ?? '') !== 'agente') {
   header("Location: /proyecto/login.php");
   exit;
 }
 
-$idAgente = $_SESSION['user']['idUsuario'];
+$idAgente = $_SESSION['usuario']['idUsuario'];
 $msg = null;
 
 // Cargar propiedad a editar
@@ -29,7 +29,7 @@ if (isset($_GET['id'])) {
 }
 
 // Guardar cambios
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save_property') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'guardar_propiedad') {
   $id = intval($_POST['id'] ?? 0);
   $tipo = $_POST['tipo'] ?? 'venta';
   $dest = isset($_POST['destacada']) ? 1 : 0;
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
   $mapaImage = uploadFile('mapa_image');
 
   if ($id > 0) {
-    // actualizar
+    // Tipo de actualización
     if ($img && $mapaImage) {
       $stmt = $mysqli->prepare("UPDATE tablaPropiedades SET tipoPropiedad=?, propiedadDestacada=?, tituloPropiedad=?, descripcionBrevePropiedad=?, precioPropiedad=?, imagenDestacadaPropiedad=?, descripcionLargaPropiedad=?, mapaPropiedad=?, ubicacionPropiedad=? WHERE idPropiedad=? AND idAgente=?");
       $stmt->bind_param("sissdsssssi", $tipo, $dest, $titulo, $brief, $precio, $img, $descripcionLarga, $mapaImage, $ubicacion, $id, $idAgente);
@@ -71,7 +71,7 @@ require_once __DIR__ . '/../includes/header.php';
   <?php if ($msg): ?>
     <div class="p-2 bg-green-100 text-green-800 mb-3"><?= h($msg) ?></div><?php endif; ?>
   <form method="post" enctype="multipart/form-data" class="bg-white p-4 rounded mb-6">
-    <input type="hidden" name="action" value="save_property">
+    <input type="hidden" name="action" value="guardar_propiedad">
     <input type="hidden" name="id" value="<?= h($editing['idPropiedad'] ?? 0) ?>">
     <div class="grid md:grid-cols-2 gap-2">
       <select name="tipo" class="p-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-300">

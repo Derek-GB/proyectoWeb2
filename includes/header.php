@@ -1,5 +1,4 @@
 <?php
-// Este archivo arma la cabecera de la página, con los estilos, menú y redes sociales
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/auth.php';
 
@@ -14,10 +13,10 @@ $config = getConfig($mysqli);
 
   <title><?= h($config['bannerMensaje'] ?? 'Proyecto') ?></title>
 
-  <!-- Aquí cargo Tailwind CSS para los estilos bonitos -->
+  <!-- Se carga Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Variables de color para personalizar la apariencia de la web -->
+  <!-- Variables de color -->
   <style>
     :root {
       --primary:
@@ -61,7 +60,7 @@ $config = getConfig($mysqli);
             class="h-14 w-14 object-contain bg-white rounded p-1" style="min-width:56px;">
         </div>
 
-        <!-- Aquí aparecen los botones de usuario o admin -->
+        <!-- Aquí aparecen los botones de agente o admin -->
         <div class="flex items-center gap-3">
           <?php if (isLoggedIn()): ?>
             <?php if (isAdmin()): ?>
@@ -77,7 +76,7 @@ $config = getConfig($mysqli);
                 </svg>
                 Administrador
               </a>
-            <?php elseif (isset($_SESSION['user']['privilegioUsuario']) && $_SESSION['user']['privilegioUsuario'] === 'agente'): ?>
+            <?php elseif (isset($_SESSION['usuario']['privilegioUsuario']) && $_SESSION['usuario']['privilegioUsuario'] === 'agente'): ?>
               <a href="/proyecto/agente/panel.php"
                 class="px-3 py-1 rounded bg-[var(--accent)] text-black text-sm font-bold flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

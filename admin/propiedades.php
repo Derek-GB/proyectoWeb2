@@ -9,7 +9,7 @@ if (!isAdmin()) {
 }
 
 // Sección para agregar una nueva propiedad o editar una existente, según lo que el usuario quiera hacer
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save_property') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'guardar_propiedad') {
   $id = intval($_POST['id'] ?? 0);
   $tipo = $_POST['tipo'] ?? 'venta';
   $dest = isset($_POST['destacada']) ? 1 : 0;
@@ -18,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
   $precio = floatval($_POST['precio'] ?? 0);
   $descripcionLarga = $_POST['descripcionLarga'] ?? '';
   $ubicacion = $_POST['ubicacion'] ?? '';
-  $idAgente = intval($_POST['idAgente'] ?? ($_SESSION['user']['idUsuario'] ?? 1));
+  $idAgente = intval($_POST['idAgente'] ?? ($_SESSION['usuario']['idUsuario'] ?? 1));
 
-  // Aquí se suben la imagen principal y el mapa de la propiedad (el mapa ahora es un archivo)
-  $img = uploadFile('imagen');           // Subo la imagen principal de la propiedad
-  $mapaImage = uploadFile('mapa_image'); // Subo la imagen del mapa de la propiedad
+  // Aquí se suben la imagen principal y el mapa de la propiedad
+  $img = uploadFile('imagen');          
+  $mapaImage = uploadFile('mapa_image');
 
   if ($id > 0) {
     // Si ya existe, actualizo la propiedad con los nuevos datos
@@ -44,14 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $stmt->close();
     $msg = "Propiedad actualizada.";
   } else {
-    // Si es nueva, la guardo en la base de datos
     if (!$img)
       $img = getConfig($mysqli)['bannerImagen'];
     if (!$mapaImage)
-      $mapaImage = null; // Si no suben mapa, lo dejo vacío
+      $mapaImage = null;
 
     $stmt = $mysqli->prepare("INSERT INTO tablaPropiedades (tipoPropiedad, propiedadDestacada, tituloPropiedad, descripcionBrevePropiedad, precioPropiedad, idAgente, imagenDestacadaPropiedad, descripcionLargaPropiedad, mapaPropiedad, ubicacionPropiedad) VALUES (?,?,?,?,?,?,?,?,?,?)");
-    // Tipos de datos para la consulta preparada (por si te pierdes: string, int, string, ...)
     $stmt->bind_param("sissdissss", $tipo, $dest, $titulo, $brief, $precio, $idAgente, $img, $descripcionLarga, $mapaImage, $ubicacion);
     $stmt->execute();
     $stmt->close();
@@ -59,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
   }
 }
 
-// Aquí borro una propiedad si el usuario lo pide
+// En caso de borrar una propiedad
 if (isset($_GET['delete'])) {
   $id = intval($_GET['delete']);
   $stmt = $mysqli->prepare("DELETE FROM tablaPropiedades WHERE idPropiedad=?");
@@ -70,7 +68,7 @@ if (isset($_GET['delete'])) {
   exit;
 }
 
-// Cargo los datos de la propiedad para editarla si el usuario selecciona esa opción
+// En caso de actualizar una propiedad
 $editing = null;
 if (isset($_GET['edit'])) {
   $editId = intval($_GET['edit']);
@@ -88,7 +86,7 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="p-2 bg-green-100 text-green-800 mb-3"><?= h($msg) ?></div><?php endif; ?>
 
   <form method="post" enctype="multipart/form-data" class="bg-white p-4 rounded mb-6">
-    <input type="hidden" name="action" value="save_property">
+    <input type="hidden" name="action" value="guardar_propiedad">
     <input type="hidden" name="id" value="<?= h($editing['idPropiedad'] ?? 0) ?>">
     <div class="grid md:grid-cols-2 gap-2">
       <select name="tipo" class="p-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-300">

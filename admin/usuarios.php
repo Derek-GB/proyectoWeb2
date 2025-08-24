@@ -9,7 +9,7 @@ if (!isAdmin()) {
 }
 
 // Crear usuario
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'create_user') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'crear_usuario') {
   $nombre = $_POST['nombre'] ?? '';
   $usuario = $_POST['usuario'] ?? '';
   $telefono = $_POST['telefono'] ?? '';
@@ -42,7 +42,7 @@ if (isset($_GET['delete'])) {
 
 // Listado
 $res = $mysqli->query("SELECT idUsuario,nombreUsuario,usuarioLogin,privilegioUsuario FROM tablaUsuarios ORDER BY idUsuario DESC");
-$usrs = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
+$usuarios = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
@@ -55,7 +55,7 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="p-2 bg-green-100 text-green-800 mb-3"><?= h($msg) ?></div><?php endif; ?>
 
   <form method="post" class="bg-white p-4 rounded shadow mb-6">
-    <input type="hidden" name="action" value="create_user">
+    <input type="hidden" name="action" value="crear_usuario">
     <input name="nombre" placeholder="Nombre"
       class="w-full p-2 rounded border border-gray-300 mb-2 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
       required>
@@ -79,13 +79,13 @@ require_once __DIR__ . '/../includes/header.php';
 
   <h3 class="font-bold mb-2">Usuarios actuales</h3>
   <ul class="space-y-2">
-    <?php foreach ($usrs as $u): ?>
+    <?php foreach ($usuarios as $u): ?>
       <li class="p-3 bg-white rounded flex justify-between items-center">
         <div><?= h($u['nombreUsuario']) ?> - <?= h($u['usuarioLogin']) ?> - <?= h($u['privilegioUsuario']) ?></div>
         <div>
           <a href="editar_usuario.php?id=<?= h($u['idUsuario']) ?>"
             class="px-2 py-1 text-xs bg-yellow-100 rounded mr-2">Editar</a>
-          <?php if (intval($u['idUsuario']) !== intval($_SESSION['user']['idUsuario'])): ?>
+          <?php if (intval($u['idUsuario']) !== intval($_SESSION['usuario']['idUsuario'])): ?>
             <a href="?delete=<?= h($u['idUsuario']) ?>" onclick="return confirm('Eliminar usuario?')"
               class="px-2 py-1 text-xs bg-red-100 rounded">Eliminar</a>
           <?php endif; ?>

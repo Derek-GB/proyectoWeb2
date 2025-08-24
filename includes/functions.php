@@ -1,8 +1,7 @@
 <?php
-// Aquí están todas las funciones que uso en el proyecto, desde helpers hasta consultas a la base de datos
 require_once __DIR__ . '/config.php';
 
-// Esta función sirve para escapar caracteres especiales y evitar problemas de seguridad 
+// Función sirve para revisar caracteres especiales y evitar problemas de seguridad 
 function h($s)
 {
     return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8');
